@@ -2,7 +2,9 @@ package main
 
 func main() {
 	server := NewServer(":3000")
-	server.Handle("/", server.AddMiddleware(HandleRoot, Logging()))
-	server.Handle("/API", server.AddMiddleware(HandleHome, CheckAuth(), Logging()))
+	server.Handle("GET", "/", server.AddMiddleware(HandleRoot, Logging()))
+	server.Handle("POST", "/create", PostRequest)
+	server.Handle("POST", "/user", UserPostRequest)
+	server.Handle("POST", "/API", server.AddMiddleware(HandleHome, CheckAuth(), Logging()))
 	server.Listen()
 }
